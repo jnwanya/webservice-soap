@@ -1,5 +1,7 @@
 package com.jnwanya.webservice;
 
+import com.jnwanya.webservice.wsdl.IBSServicesSoap12Stub;
+import com.jnwanya.webservice.wsdl.IBSServicesSoap_BindingStub;
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -30,5 +32,26 @@ public class BootLoader implements ApplicationListener<ContextRefreshedEvent> {
         }catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void bvnValidation(String bvn) {
+
+        try {
+            int appId = 2;
+           // IBSServicesSoap_BindingStub stub = new IBSServicesSoap_BindingStub();
+            IBSServicesSoap12Stub soap12Stub = new IBSServicesSoap12Stub();
+
+            String bvnString = "";
+            String encryptedBVNString = "";
+            String encryptedResponse  = soap12Stub.IBSBridge(encryptedBVNString, appId);
+            String responseXMl  = hajjServiceEncryption.decrypt(encryptedBVNString);
+
+           // String encryptedResponse  = soap12Stub.IBSBridge(encryptedBVNString, appId);
+
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
     }
 }
